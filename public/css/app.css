@@ -1,0 +1,24 @@
+body {
+  background-color: #f4eaff;
+  font-family: 'Helvetica Neue', Helvetica, Verdana, sans-serif;
+}
+.heading {
+  font-family: Quicksand;
+  text-transform: uppercase;
+  text-align: center;
+}
+.heading1 {
+  font-family: Quicksand;
+  text-transform: uppercase;
+  text-align: center;
+  color: #553963;
+  font-size: 2em;
+  margin-bottom: 1em;
+}
+.heading2 {
+  font-family: Quicksand;
+  text-transform: uppercase;
+  text-align: center;
+  color: #89619f;
+  font-size: 1.5em;
+}
