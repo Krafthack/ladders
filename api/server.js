@@ -5,7 +5,7 @@ var app = express();
 var Q = require('q');
 
 var mongoose = require('mongoose');
-mongoose.connect('mongodb://localhost/test');
+mongoose.connect(process.env.MONGOLAB_URI || 'mongodb://localhost/test');
 
 var Result = mongoose.model('Result', { teams: [String], score: [Number] });
 
@@ -86,6 +86,6 @@ app.get('/api/scoreboard', (req, res) => {
 
 });
 
-var server = app.listen(8001, () => {
+var server = app.listen(process.env.PORT, () => {
   console.log('listening on port %d', server.address().port);
 })

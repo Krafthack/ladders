@@ -61,3 +61,5 @@ gulp.task('build', ['less', 'scripts', 'mithril', 'apiScripts'])
 gulp.task('dev', ['build', 'watch', 'nodemon'])
 
 gulp.task('default', ['dev']);
+
+gulp.task('heroku:production', ['build']);
