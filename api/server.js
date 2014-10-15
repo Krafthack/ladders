@@ -22,27 +22,32 @@ var allMatches = () => {
 }
 
 var addMatch2Scoreboard = (board, match) => {
-  var winner = match.score[0] > match.score[1] ? 0 : 1;
-  addMatchForTeam(board, match.teams[0], winner);
-  addMatchForTeam(board, match.teams[1], winner);
+  var scoreA = parseInt(match.score[0] || 0);
+  var scoreB = parseInt(match.score[1] || 0);
+  if (scoreA == scoreB) {
+    addMatchForTeam(board, match.teams[0], false);
+    addMatchForTeam(board, match.teams[1], false);  
+  } else {
+    var winner = scoreA > scoreB ? 0 : 1;
+    addMatchForTeam(board, match.teams[0], winner == 0);
+    addMatchForTeam(board, match.teams[1], winner == 1);
+  }
+
   return board;
 }
 
 var addMatchForTeam = (board, team, winner) => {
-  var isWinner = winner == 0;
+  var isWinner = winner;
   var points = isWinner ? 3 : 0;
-  if (board[team] != null) {
-    var entry = board[team];
-    entry.points = entry.points + 1;
-    entry.games = entry.games + 1;
-    board[team] = entry;
-    if (isWinner) entry.wins = entry.wins + 1;
-    else entry.loss = entry.loss + 1;
-  }
-  else {
-    var entry = { teamName: team, games: 1, wins: 0, loss: 1, points: 0 }
+  if (board[team] == null) {
+    var entry = { teamName: team, games: 0, wins: 0, loss: 0, points: 0 }
     board[team] = entry;
   }
+  var entry = board[team];
+  entry.games = entry.games + 1;
+  board[team] = entry;
+  if (isWinner) entry.wins = entry.wins + 1;
+  else entry.loss = entry.loss + 1;
 }
 
 app.use(bodyParser.json());

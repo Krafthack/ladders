@@ -21,12 +21,12 @@ register.controller = () => {
     e.preventDefault();
     var data = {
       teams: [mapper(register.model.teamOne), mapper(register.model.teamTwo)],
-      score: [register.model.teamOneScore(), register.model.teamTwoScore()]
+      score: [parseInt(register.model.teamOneScore()), parseInt(register.model.teamTwoScore())]
     }
     console.log(data)
     m.request({ method: 'POST', url: '/api/register', data: data})
       .then(() =>{
-        console.log('got a response')
+        window.location.replace(window.location.origin + '/scoreboard.html')
       });
   };
 
