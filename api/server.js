@@ -1,5 +1,6 @@
 var express = require('express');
 var bodyParser = require('body-parser');
+var url = require('url');
 var app = express();
 
 var Q = require('q');
@@ -7,7 +8,7 @@ var Q = require('q');
 var mongoose = require('mongoose');
 mongoose.connect(process.env.MONGOLAB_URI || 'mongodb://localhost/test');
 
-var Result = mongoose.model('Result', { teams: [String], score: [Number] });
+var Result = mongoose.model('Result', { teams: [String], score: [Number], invalid: Boolean });
 
 var allMatches = () => {
   var deferred = Q.defer();
@@ -74,6 +75,37 @@ app.get('/api/matches', (req, res) => {
     (matches) => { res.json(matches) },
     (err) => { res.status(500).json(err) });
 });
+
+app.post('/api/matches/invalidate', (req, res) => {
+  var id = url.parse(req.url, true).query.id;
+  Result.find({ _id: id}, (err, results) => {
+    if (results.length > 0) {
+      var result = results[0];
+      result.invalid = true;
+      result.save((err) => {
+        if (err) {
+          res.status(500).send( {
+            success: false,
+            msg: 'Could not invalidate match. Something to do with the db',
+            err: err,
+            match_id: id
+          })
+        }
+        else {
+          res.send( {success: true } )
+        }
+      })
+    } else {
+      res.status(500).send( {
+        success: false,
+        msg: 'The Match you are looking for cannot be found',
+        err: err,
+        match_id: id
+      })
+    }
+  });
+
+})
 
 app.get('/api/scoreboard', (req, res) => {
   var scoreboard = {};
