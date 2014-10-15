@@ -110,7 +110,11 @@ app.post('/api/matches/invalidate', (req, res) => {
 app.get('/api/scoreboard', (req, res) => {
   var scoreboard = {};
   allMatches().then((matches) => {
-    matches.forEach((match) => {
+    matches
+    .filter((match) => {
+      return !match.invalid;
+    })
+    .forEach((match) => {
       addMatch2Scoreboard(scoreboard, match);
     })
     var asArray = Object.keys(scoreboard).map((t) => {
