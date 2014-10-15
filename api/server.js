@@ -26,7 +26,7 @@ var addMatch2Scoreboard = (board, match) => {
   var scoreB = parseInt(match.score[1] || 0);
   if (scoreA == scoreB) {
     addMatchForTeam(board, match.teams[0], false);
-    addMatchForTeam(board, match.teams[1], false);  
+    addMatchForTeam(board, match.teams[1], false);
   } else {
     var winner = scoreA > scoreB ? 0 : 1;
     addMatchForTeam(board, match.teams[0], winner == 0);
@@ -88,7 +88,6 @@ app.get('/api/scoreboard', (req, res) => {
   }, (err) => { res.json(err) })
   .catch((err) =>
   res.json(err  ))
-
 });
 
 var server = app.listen(process.env.PORT, () => {
