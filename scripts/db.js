@@ -23,12 +23,12 @@ var generateTaste = function(len) {
 
 }
 
-var teams = [];
+var players = [];
 (function() {
   var hash = {};
-  var addTeamIfUnique = function(name) {
+  var addPlayerIfUnique = function(name) {
     if (hash[name] != null) return false;
-    teams.push(name)
+    players.push(name)
     hash[name] = true
     return true
   };
@@ -37,7 +37,7 @@ var teams = [];
       var taste = generateTaste(Math.floor(rnd() * maxFlavors))
       var postfix = selectRandom(postfixes);
       var name = taste + ' ' + postfix;
-      addTeamIfUnique(name)
+      addPlayerIfUnique(name)
   }
 })()
 
@@ -52,8 +52,17 @@ var matches = [];
   for (var i = 0; i < numMatches; i++) {
       var winner = Math.floor(rnd() * 2);
       var score = generateScore(winner);
-      var vs = [selectRandom(teams), selectRandom(teams)];
-      if (teams[0] == teams[1]) continue;
+      var teamA = [
+        selectRandom(players),
+        selectRandom(players)
+      ]
+
+      var teamB = [
+        selectRandom(players),
+        selectRandom(players)
+      ]
+
+      var vs = [teamA, teamB];
       matches.push(new Result({ teams: vs, score: score }));
   }
 })()
@@ -69,4 +78,4 @@ matches.forEach(function(match) {
 })
 
 
-console.log(JSON.stringify({ teams: teams, matches: matches }, null,4))
+console.log(JSON.stringify({ players: players, matches: matches }, null,4))
