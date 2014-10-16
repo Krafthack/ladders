@@ -12,7 +12,7 @@ board.view = (ctrl) => {
   return [
     m('h1', { class: 'heading1' }, 'Scoreboard'),
     m('div', { class: 'scoreboardHeading'}, [
-      m('div', { class: 'teamName'}, 'Team'),
+      m('div', { class: 'teamName_entry'}, 'Team'),
       m('div', { class: 'games'}, 'Games'),
       m('div', { class: 'wins'}, 'W'),
       m('div', { class: 'losses'}, 'L'),
@@ -21,7 +21,7 @@ board.view = (ctrl) => {
     ]),
     ctrl.scoreboard().map((entry) => {
       return m('div', { class: 'scoreboardEntry' }, [
-        m('div', { class: 'teamName'}, entry.teamName),
+        m('div', { class: 'teamName_entry'}, entry.teamName),
         m('div', { class: 'games'}, entry.games),
         m('div', { class: 'wins'}, entry.wins),
         m('div', { class: 'losses'}, entry.loss),
@@ -31,5 +31,3 @@ board.view = (ctrl) => {
     })
   ]
 };
-
-m.module(document.getElementById('scoreboard'), board);

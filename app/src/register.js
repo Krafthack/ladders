@@ -84,5 +84,3 @@ register.view = (ctrl) => {
         m('button', { class: 'submitButton-register', onclick: ctrl.update} ,'Register')])])
   ]
 };
-
-m.module(document.getElementById('app'), register);

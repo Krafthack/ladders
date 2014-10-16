@@ -38,5 +38,3 @@ matches.view = (ctrl) => {
       ]))
   ]
 };
-
-m.module(document.getElementById('matches'), matches);
