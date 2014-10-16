@@ -56,7 +56,15 @@ gulp.task('mithril', function() {
     .pipe(gulp.dest('./public/js'))
 })
 
-gulp.task('build', ['less', 'scripts', 'mithril', 'apiScripts'])
+gulp.task('font-awesome', function() {
+  gulp.src('./node_modules/font-awesome/css/font-awesome.css')
+    .pipe(gulp.dest('./public/css'))
+
+  gulp.src('./node_modules/font-awesome/fonts/*')
+  .pipe(gulp.dest('./public/fonts'))
+});
+
+gulp.task('build', ['less', 'scripts', 'mithril', 'font-awesome', 'apiScripts'])
 
 gulp.task('dev', ['build', 'watch', 'nodemon'])
 

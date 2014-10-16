@@ -1,0 +1,48 @@
+@navSize: 90%;
+
+/* Styling */
+.menu {
+  background-color: rgba(33, 33, 33, 0.8);
+  color: rgba(255, 255, 255, 1.0);
+}
+.menuToggle {
+  font-size: 1.4em;
+}
+a.menuItem {
+  display: block;
+  color: rgba(255, 255, 255, 1.0);
+  padding: 1em 1em;
+  text-decoration: none;
+}
+
+/* Spacing */
+.menu {
+  bottom: 0;
+  top: 0;
+  width: @navSize;
+}
+.menuToggle {
+  padding-left: 0.5em;
+}
+/* Transition */
+.menu {
+  transition: left ease-out 0.5s;
+  position: absolute;
+}
+.menu-closed {
+  left: -100%;
+}
+.menu-open {
+  left: 0%;
+}
+.menuToggle {
+  position: absolute;
+  z-index: 1;
+  transition: left ease-out 0.5s;
+}
+.menuToggle-closed {
+  left: 0%;
+}
+.menuToggle-open {
+  left: @navSize;
+}
