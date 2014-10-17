@@ -3,7 +3,6 @@ var Scoreboard = require('../model/scoreboard');
 var Q = require('q');
 var app = express();
 var Match = require('../model/match');
-var Result = Match.model;
 
 app.get('/api/scoreboard', (req, res) => {
   Match.all().then((matches) => {
@@ -13,5 +12,12 @@ app.get('/api/scoreboard', (req, res) => {
   .catch((err) =>
   res.json(err  ))
 });
+
+app.get('/api/player/:name', (req, res) => {
+  Match.all().then((matches) => {
+    return res.json(matches);
+  }, (err) => res.json(err));
+
+})
 
 module.exports = app

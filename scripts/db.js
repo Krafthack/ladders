@@ -2,9 +2,7 @@ var mongoose = require('mongoose');
 var seedrandom = require('seedrandom');
 var rnd = seedrandom('notrandom');
 
-mongoose.connect('mongodb://localhost/test');
-
-var Result = mongoose.model('Result', { teams: [String], score: [Number] });
+var Result = require('../build/model/match').model;
 
 var tastes = ['Brownie', 'Strawberry', 'Banana', 'Vanilla', 'Tomato', 'Apple'];
 var postfixes = ['Milkshake', 'Cake', 'Picture', 'Cookie', 'Project'];

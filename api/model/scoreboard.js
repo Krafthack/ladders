@@ -14,7 +14,8 @@ var addMatch2Scoreboard = (board, match) => {
   return board;
 }
 
-var addMatchForTeam = (board, team, winner) => {
+var addMatchForTeam = (board, teamArray, winner) => {
+  var team = teamArray.join(',');
   var isWinner = winner;
   var points = isWinner ? 3 : 0;
   if (board[team] == null) {
