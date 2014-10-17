@@ -4,18 +4,6 @@ var app = express();
 var Match = require('../model/match');
 var Result = Match.model;
 
-var allMatches = () => {
-  var deferred = Q.defer();
-  Result.find((err, results) => {
-    if (err) {
-      deferred.reject(err);
-    } else {
-      deferred.resolve(results);
-    }
-  });
-  return deferred.promise;
-}
-
 var addMatch2Scoreboard = (board, match) => {
   var scoreA = parseInt(match.score[0] || 0);
   var scoreB = parseInt(match.score[1] || 0);

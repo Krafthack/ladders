@@ -7,19 +7,8 @@ var app = express();
 var mongoose = require('./mongoose-wrapper');
 app.use(api);
 
-var Result = require('./model/match.js').model;
-
-var allMatches = () => {
-  var deferred = Q.defer();
-  Result.find((err, results) => {
-    if (err) {
-      deferred.reject(err);
-    } else {
-      deferred.resolve(results);
-    }
-  });
-  return deferred.promise;
-}
+var Match = require('./model/match.js');
+var Result = Match.model;
 
 app.use(bodyParser.json());
 app.use('/', express.static(__dirname + '/../public'));
@@ -41,7 +30,7 @@ app.post('/api/register', (req, res) => {
 })
 
 app.get('/api/matches', (req, res) => {
-  allMatches().then(
+  Match.all().then(
     (matches) => { res.json(matches) },
     (err) => { res.status(500).json(err) });
 });
