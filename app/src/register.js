@@ -26,7 +26,7 @@ register.controller = () => {
     console.log(data)
     m.request({ method: 'POST', url: '/api/register', data: data})
       .then(() =>{
-        window.location.replace(window.location.origin + '/scoreboard.html')
+        window.location.replace(window.location.origin + '/?/scoreboard')
       });
   };
 
