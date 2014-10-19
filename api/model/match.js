@@ -13,13 +13,15 @@ var Match = function() {}
 Match.prototype.model = Model;
 Match.prototype.all = () => {
   var deferred = Q.defer();
-  Model.find((err, results) => {
-    if (err) {
-      deferred.reject(err);
-    } else {
-      deferred.resolve(results);
-    }
-  });
+  Model.find({})
+    .sort({date: 'desc'})
+    .exec((err, results) => {
+      if (err) {
+        deferred.reject(err);
+      } else {
+        deferred.resolve(results);
+      }
+    });
   return deferred.promise;
 }
 
