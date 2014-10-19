@@ -1,4 +1,8 @@
 @import "app.less";
+@numCols-small: 4;
+@numCols-medium: 5;
+@firstCol-width: 50%;
+@restCol-width: 100% - @firstCol-width;
 
 .scoreboardHeading {
   font-size: 1em;
@@ -16,22 +20,60 @@
   box-sizing: border-box;
   display: inline-block;
 }
+.entryCol {
+  width: @restCol-width / @numCols-small;
+}
+.entryCol:not(.entryHeader) {
+  font-size: 0.8em;
+}
 .teamName_entry {
-  width: 30%;
-}
-.points,
-.games,
-.wins,
-.losses,
-.draws {
-  width: 12%;
+  width: @firstCol-width;
 }
 .games,
 .wins,
 .losses,
-.draws {
+.draws,
+.points {
   text-align: center;
 }
-.points {
-  text-align: right;
+.draws {
+  display: none;
+}
+.entryHeader.games::before {
+  content: "G";
+}
+.entryHeader.wins::before {
+  content: "W";
+}
+.entryHeader.losses::before {
+  content: "L";
+}
+.entryHeader.draws::before {
+  content: "D";
+}
+.entryHeader.points::before {
+  content: "P";
+}
+@media screen and (min-width: 640px) {
+  .entryCol {
+    width:@restCol-width / @numCols-medium;
+  }
+  .draws {
+    display: inline-block;
+  }
+  .entryHeader.games::before {
+    content: "Games";
+  }
+  .entryHeader.wins::before {
+    content: "Wins";
+  }
+  .entryHeader.losses::before {
+    content: "Loss";
+  }
+  .entryHeader.draws::before {
+    content: "Draws";
+  }
+  .entryHeader.points::before {
+    content: "Points";
+  }
 }
