@@ -8,13 +8,12 @@ var mongoose = require('./mongoose-wrapper');
 app.use(api);
 
 var Match = require('./model/match.js');
-var Result = Match.model;
 
 app.use(bodyParser.json());
 app.use('/', express.static(__dirname + '/../public'));
 
 app.post('/api/register', (req, res) => {
-  var result = new Result({ teams: req.body.teams, score: req.body.score })
+  var result = new Match.model({ teams: req.body.teams, score: req.body.score })
   result.save((err) => {
       if (err) {
         res.status(500).send( {
@@ -43,7 +42,7 @@ app.get('/api/matches', (req, res) => {
 
 app.post('/api/matches/invalidate', (req, res) => {
   var id = url.parse(req.url, true).query.id;
-  Result.find({ _id: id}, (err, results) => {
+  Match.model.find({ _id: id}, (err, results) => {
     if (results.length > 0) {
       var result = results[0];
       result.invalid = true;

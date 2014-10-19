@@ -1,8 +1,12 @@
 var Q = require('q');
 var mongoose = require('../mongoose-wrapper');
 
-var oldModel = mongoose.model('Result', { teams: [String], score: [Number], invalid: Boolean });
-var Model = mongoose.model('Match', { teams: Array, score: [Number], invalid: Boolean });
+var Model = mongoose.model('Match', {
+  teams: Array,
+  score: [Number],
+  invalid: Boolean,
+  date: { type: Date, default: Date.now }
+});
 
 var Match = function() {}
 
