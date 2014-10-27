@@ -25,12 +25,14 @@ app.get('/api/player/:name', (req, res) => {
    }
 
   var won = (match, player) => {
-    var playerTeam = _(match.teams)
+    var teamsIndex = _(match.teams)
       .flatten()
       .map(lowercase)
       .indexOf(player.toLowerCase())
 
-    var otherTeam = playerTeam == 0 ? 1 : 0;
+    var playerTeam = teamsIndex <= 1 ? 0 : 1;
+
+    var otherTeam = playerTeam == 0? 1 : 0 ;
     return match.score[playerTeam] > match.score[otherTeam]
   }
 
