@@ -16,14 +16,42 @@ app.get('/api/scoreboard', (req, res) => {
 });
 
 app.get('/api/player/:name', (req, res) => {
-  var isPlayer = (player) => (match) =>
-     _(match.teams).flatten().contains(player);
+  var lowercase = (str) => str.toLowerCase()
+
+  var isPlayer = (player) => (match) => {
+    return _(match.teams).flatten()
+      .map(lowercase)
+      .contains(player.toLowerCase());
+   }
+
+  var won = (match, player) => {
+    var playerTeam = _(match.teams)
+      .flatten()
+      .map(lowercase)
+      .indexOf(player.toLowerCase())
+
+    var otherTeam = playerTeam == 0 ? 1 : 0;
+    return match.score[playerTeam] > match.score[otherTeam]
+  }
+
   var player = req.param('name');
 
   Match.all().then((matches) => {
-    var data = matches.filter(isPlayer(player))
-    return res.json(data);
+    return matches.filter(isPlayer(player))
   }, (err) => res.json(err))
+  .then((matches) => {
+    var wins = _(matches).map((match) => won(match, player))
+      .filter((isTrue) => isTrue)
+      .value()
+      .length;
+    return {
+      matches: matches,
+      wins: wins,
+      loss: matches.length - wins
+    }
+  }).then((data) => {
+    return res.json(data)
+  })
   .catch((err) => { throw new Error(err) });
 
 })
