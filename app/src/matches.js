@@ -10,7 +10,6 @@ matches.controller = () => {
 };
 
 matches.view = (ctrl) => {
-  console.log(ctrl.matches()[0])
   return [
     m('h1', {class: 'heading1'} ,'Matches'),
     ctrl.matches().map((match) =>
