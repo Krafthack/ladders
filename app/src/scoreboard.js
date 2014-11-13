@@ -21,7 +21,7 @@ board.view = (ctrl) => {
     ]),
     ctrl.scoreboard().map((entry) => {
       return m('div', { class: 'scoreboardEntry' }, [
-        m('div.entryCol', { class: 'teamName_entry'}, entry.teamName),
+        m('div.entryCol', { class: 'teamName_entry'}, entry.playername),
         m('div.entryCol', { class: 'games'}, entry.games),
         m('div.entryCol', { class: 'wins'}, entry.wins),
         m('div.entryCol', { class: 'losses'}, entry.loss),
