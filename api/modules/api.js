@@ -9,7 +9,8 @@ var Match = require('../model/match');
 app.get('/api/scoreboard', (req, res) => {
   Match.all().then((matches) => {
     var scoreboard = new Scoreboard(matches);
-    res.json(scoreboard)
+    var sorted = _(scoreboard).sortBy('points', 'wins').value().reverse();
+    res.json(sorted)
   }, (err) => { res.json(err) })
   .catch((err) =>
   res.json(err  ))
