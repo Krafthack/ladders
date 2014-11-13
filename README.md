@@ -7,7 +7,7 @@ ladders
 
 ## Local setup
 1. Clone repo
-2. ```npm install````
+2. ```npm install```
 3. Make sure MongoDB is running
-4. ```gulp````
+4. ```gulp```
 5. Last command will prompt which port site is located on.
