@@ -24,9 +24,9 @@ var player = {
     return [
       m('h1.heading1', 'Player statistics'),
       m('h2.heading2', 'Summary'),
-      m('div', 'Player: ' + ctrl.player()),
-      m('div', 'Wins: ' + (model ? model.wins : null)),
-      m('div', 'Loss: ' + (model ? model.loss : null)),
+      m('div.stats-el.stats-playerName', ctrl.player()),
+      m('div.stats-el', 'Wins: ' + (model ? model.wins : null)),
+      m('div.stats-el', 'Loss: ' + (model ? model.loss : null)),
       m('h2.heading2', 'Matches'),
       matches()
     ]
