@@ -16,8 +16,10 @@ var player = {
   },
   view: (ctrl) => {
     var model = ctrl.model()
-    var matches = () => ctrl.model().matches
-        .map((match) => m('div', ''))
+    var matches = () => ctrl.model().matches == null ?
+      [] : ctrl.model().matches.map(MatchView)
+
+
 
     return [
       m('h1.heading1', 'Player statistics'),
@@ -26,7 +28,7 @@ var player = {
       m('div', 'Wins: ' + (model ? model.wins : null)),
       m('div', 'Loss: ' + (model ? model.loss : null)),
       m('h2.heading2', 'Matches'),
-      m('div', 'Coming soon')
+      matches()
     ]
   }
 }
