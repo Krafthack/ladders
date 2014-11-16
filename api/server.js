@@ -30,13 +30,7 @@ app.post('/api/register', (req, res) => {
 
 app.get('/api/matches', (req, res) => {
   Match.all().then(
-    (matches) => {
-      res.json(matches.map((match) => {
-        var teams = match.teams.map((team) => team.join(','))
-        match.teams = teams;
-        return match;
-      }))
-    },
+    (matches) => res.json(matches),
     (err) => { res.status(500).json(err) });
 });
 

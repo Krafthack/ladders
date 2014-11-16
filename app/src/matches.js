@@ -9,15 +9,18 @@ matches.controller = () => {
   }
 };
 
+var MatchPlayerView = (player, i) =>
+  m('a.matches-playerName', { config: m.route, href: '/player/' + player } ,(i > 0 ? ',' : '') + player)
+
 var MatchView = (match) =>
   m('div.match', [
-    m('div', { class: 'teamName' }, match.teams[0]),
+    m('div', { class: 'teamName' }, match.teams[0].map(MatchPlayerView)),
     m('div', { class: 'scoreWrapper'}, [
       m('div', { class: 'score' }, match.score[0]),
       m('div', { class: 'vs' } ,' vs '),
       m('div', { class: 'score' }, match.score[1])
     ]),
-    m('div', { class: 'teamName' }, match.teams[1]),
+    m('div', { class: 'teamName' }, match.teams[1].map(MatchPlayerView)),
     m('a.delete', {
 
       href: '/api/matches/invalidate?id=' + match._id,
