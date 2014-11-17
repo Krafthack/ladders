@@ -1,32 +1,33 @@
+var _ = require('lodash');
 
 var addMatch2Scoreboard = (board, match) => {
   var scoreA = parseInt(match.score[0] || 0);
   var scoreB = parseInt(match.score[1] || 0);
   if (scoreA == scoreB) {
-    addMatchForTeam(board, match.teams[0], false);
-    addMatchForTeam(board, match.teams[1], false);
+    addMatchForTeamMembers(board, match.teams[0], false);
+    addMatchForTeamMembers(board, match.teams[1], false);
   } else {
     var winner = scoreA > scoreB ? 0 : 1;
-    addMatchForTeam(board, match.teams[0], winner == 0);
-    addMatchForTeam(board, match.teams[1], winner == 1);
+    addMatchForTeamMembers(board, match.teams[0], winner == 0);
+    addMatchForTeamMembers(board, match.teams[1], winner == 1);
   }
-
   return board;
 }
 
-var addMatchForTeam = (board, teamArray, winner) => {
-  var team = teamArray.join(',');
-  var isWinner = winner;
-  var points = isWinner ? 3 : 0;
-  if (board[team] == null) {
-    var entry = { teamName: team, games: 0, wins: 0, loss: 0, points: 0 }
-    board[team] = entry;
-  }
-  var entry = board[team];
-  entry.games = entry.games + 1;
-  board[team] = entry;
-  if (isWinner) entry.wins = entry.wins + 1;
-  else entry.loss = entry.loss + 1;
+var addMatchForTeamMembers = (board, teamArray, winner) => {
+  _(teamArray).each((player) => {
+    var isWinner = winner;
+    var points = isWinner ? 3 : 0;
+    if (board[player] == null) {
+      var entry = { playername: player, games: 0, wins: 0, loss: 0, points: 0 }
+      board[player] = entry;
+    }
+    var entry = board[player];
+    entry.points = points;
+    entry.games = entry.games + 1;
+    if (isWinner) entry.wins = entry.wins + 1;
+    else entry.loss = entry.loss + 1;
+  })
 }
 
 
