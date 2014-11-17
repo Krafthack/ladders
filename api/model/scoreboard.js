@@ -15,7 +15,8 @@ var addMatch2Scoreboard = (board, match) => {
 }
 
 var addMatchForTeamMembers = (board, teamArray, winner) => {
-  _(teamArray).each((player) => {
+  _(teamArray).each((playerCaseSens) => {
+    var player = playerCaseSens.toLowerCase();
     var isWinner = winner;
     var points = isWinner ? 3 : 0;
     if (board[player] == null) {
