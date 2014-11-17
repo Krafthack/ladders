@@ -23,7 +23,7 @@ var addMatchForTeamMembers = (board, teamArray, winner) => {
       board[player] = entry;
     }
     var entry = board[player];
-    entry.points = points;
+    entry.points = entry.points + points;
     entry.games = entry.games + 1;
     if (isWinner) entry.wins = entry.wins + 1;
     else entry.loss = entry.loss + 1;
