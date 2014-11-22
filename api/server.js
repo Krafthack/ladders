@@ -3,6 +3,7 @@ var bodyParser = require('body-parser');
 var url = require('url');
 var api = require('./modules/api');
 var Q = require('q');
+var _ = require('lodash');
 var app = express();
 var mongoose = require('./mongoose-wrapper');
 app.use(api);
@@ -13,7 +14,11 @@ app.use(bodyParser.json());
 app.use('/', express.static(__dirname + '/../public'));
 
 app.post('/api/register', (req, res) => {
-  var result = new Match.model({ teams: req.body.teams, score: req.body.score })
+  var teams = req.body.teams;
+  if (typeof req.body.teams[0] == 'object') {
+    teams = _.flatten(req.body.teams);
+  }
+  var result = new Match.model({ teams: teams, score: req.body.score })
   result.save((err) => {
       if (err) {
         res.status(500).send( {

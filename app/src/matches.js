@@ -14,13 +14,13 @@ var MatchPlayerView = (player, i) =>
 
 var MatchView = (match) =>
   m('div.match', [
-    m('div', { class: 'teamName' }, match.teams[0].map(MatchPlayerView)),
+    m('div', { class: 'teamName' }, match.teams.slice(0,2).map(MatchPlayerView)),
     m('div', { class: 'scoreWrapper'}, [
       m('div', { class: 'score' }, match.score[0]),
       m('div', { class: 'vs' } ,' vs '),
       m('div', { class: 'score' }, match.score[1])
     ]),
-    m('div', { class: 'teamName' }, match.teams[1].map(MatchPlayerView)),
+    m('div', { class: 'teamName' }, match.teams.slice(2,4).map(MatchPlayerView)),
     m('a.delete', {
 
       href: '/api/matches/invalidate?id=' + match._id,

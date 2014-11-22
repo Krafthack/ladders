@@ -4,12 +4,12 @@ var addMatch2Scoreboard = (board, match) => {
   var scoreA = parseInt(match.score[0] || 0);
   var scoreB = parseInt(match.score[1] || 0);
   if (scoreA == scoreB) {
-    addMatchForTeamMembers(board, match.teams[0], false);
-    addMatchForTeamMembers(board, match.teams[1], false);
+    addMatchForTeamMembers(board, [match.teams[0], match.teams[1]], false);
+    addMatchForTeamMembers(board, [match.teams[2], match.teams[3]], false);
   } else {
     var winner = scoreA > scoreB ? 0 : 1;
-    addMatchForTeamMembers(board, match.teams[0], winner == 0);
-    addMatchForTeamMembers(board, match.teams[1], winner == 1);
+    addMatchForTeamMembers(board, [match.teams[0], match.teams[1]], winner == 0);
+    addMatchForTeamMembers(board, [match.teams[2], match.teams[3]], winner == 1);
   }
   return board;
 }
