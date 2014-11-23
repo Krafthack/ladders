@@ -6,12 +6,6 @@ var app = express();
 app.get('/:name', (req, res) => {
   var lowercase = (str) => str.toLowerCase()
 
-  var isPlayer = (player) => (match) => {
-    return _(match.teams).flatten()
-      .map(lowercase)
-      .contains(player.toLowerCase());
-   }
-
   var won = (match, player) => {
     var teamsIndex = _(match.teams)
       .flatten()
@@ -26,9 +20,7 @@ app.get('/:name', (req, res) => {
 
   var player = req.param('name');
 
-  Match.all().then((matches) => {
-    return matches.filter(isPlayer(player))
-  }, (err) => res.json(err))
+  Match.player(player)
   .then((matches) => {
     var wins = _(matches).map((match) => won(match, player))
       .filter((isTrue) => isTrue)
