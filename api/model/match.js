@@ -1,12 +1,6 @@
 var Q = require('q');
 var mongoose = require('../mongoose-wrapper');
-
-var Model = mongoose.model('Match', {
-  teams: [String],
-  score: [Number],
-  invalid: Boolean,
-  date: { type: Date, default: Date.now }
-});
+var Model = require('./matchModel');
 
 var Match = function() {}
 
