@@ -24,7 +24,7 @@ register.controller = () => {
       score: [parseInt(register.model.teamOneScore()), parseInt(register.model.teamTwoScore())]
     }
     console.log(data)
-    m.request({ method: 'POST', url: '/api/register', data: data})
+    m.request({ method: 'POST', url: '/api/matches/register', data: data})
       .then(() =>{
         window.location.replace(window.location.origin + '/?/scoreboard')
       });

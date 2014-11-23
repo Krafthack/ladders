@@ -6,7 +6,7 @@ var scoreboard = require('./scoreboard');
 var player = require('./player');
 
 app.use(register);
-app.use(matches);
+app.use('/api/matches', matches);
 app.use(player);
 app.use(scoreboard);
 

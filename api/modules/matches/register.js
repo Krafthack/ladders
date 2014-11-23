@@ -1,9 +1,9 @@
 var _ = require('lodash');
-var Match = require('../model/match');
+var Match = require('../../model/match');
 var express = require('express');
 var app = express();
 
-app.post('/api/register', (req, res) => {
+app.post('/register', (req, res) => {
   var teams = req.body.teams;
   if (typeof req.body.teams[0] == 'object') {
     teams = _.flatten(req.body.teams);
