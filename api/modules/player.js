@@ -3,7 +3,7 @@ var Match = require('../model/match');
 var express = require('express');
 var app = express();
 
-app.get('/api/player/:name', (req, res) => {
+app.get('/:name', (req, res) => {
   var lowercase = (str) => str.toLowerCase()
 
   var isPlayer = (player) => (match) => {
