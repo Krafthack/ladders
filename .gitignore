@@ -29,6 +29,6 @@ node_modules
 
 build/**/*
 
-public/js/*.js
+public/js/**/*.js
 public/css/*.css
 public/fonts/*
