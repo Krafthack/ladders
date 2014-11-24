@@ -1,5 +1,5 @@
 var _ = require('lodash');
-var Match = require('../../model/match');
+var Match = require('../../model/matchModel');
 var express = require('express');
 var app = express();
 
@@ -8,7 +8,7 @@ app.post('/register', (req, res) => {
   if (typeof req.body.teams[0] == 'object') {
     teams = _.flatten(req.body.teams);
   }
-  var result = new Match.model({ teams: teams, score: req.body.score })
+  var result = new Match({ teams: teams, score: req.body.score })
   result.save((err) => {
       if (err) {
         res.status(500).send( {

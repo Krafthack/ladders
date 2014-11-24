@@ -1,26 +1,21 @@
 var register = {};
 
 register.model = {
-    teamOne: {
-      player: [m.prop(''), m.prop('')]
-    },
-    teamTwo: {
-      player: [m.prop(''), m.prop('')]
-    },
+    players: [m.prop(''), m.prop(''), m.prop(''), m.prop('')],
     teamOneScore: m.prop(''),
     teamTwoScore: m.prop('')
 }
 
 register.controller = () => {
   var mapper = (team) => {
-    return team.player.map((player) => {
+    return team.map((player) => {
         return player();
       })
   }
   var update = (e) => {
     e.preventDefault();
     var data = {
-      teams: [mapper(register.model.teamOne), mapper(register.model.teamTwo)],
+      teams: mapper(register.model.players),
       score: [parseInt(register.model.teamOneScore()), parseInt(register.model.teamTwoScore())]
     }
     console.log(data)
@@ -40,29 +35,29 @@ register.view = (ctrl) => {
     m('h1', { class: 'heading1' }, 'Register result'),
     m('form', [
       m('input', {
-        value: register.model.teamOne.player[0](),
-        onchange: m.withAttr('value', register.model.teamOne.player[0]),
+        value: register.model.players[0](),
+        onchange: m.withAttr('value', register.model.players[0]),
         class: 'inputPlayer',
         placeholder: 'Player 1'
       }),
       m('span', { class: 'playerSeperator' }, ' and '),
       m('input', {
-        value: register.model.teamOne.player[1](),
-        onchange: m.withAttr('value', register.model.teamOne.player[1]),
+        value: register.model.players[1](),
+        onchange: m.withAttr('value', register.model.players[1]),
         class: 'inputPlayer',
         placeholder: 'Player 2'
       }),
       m('h2', { class: ['heading2__lessVSpace'] }, 'vs.'),
       m('input', {
-        value: register.model.teamTwo.player[0](),
-        onchange: m.withAttr('value', register.model.teamTwo.player[0]),
+        value: register.model.players[2](),
+        onchange: m.withAttr('value', register.model.players[2]),
         class: 'inputPlayer',
         placeholder: 'Player 3'
       }),
       m('span', { class: 'playerSeperator' }, ' and '),
       m('input', {
-        value: register.model.teamTwo.player[1](),
-        onchange: m.withAttr('value', register.model.teamTwo.player[1]),
+        value: register.model.players[3](),
+        onchange: m.withAttr('value', register.model.players[3]),
         class: 'inputPlayer',
         placeholder: 'Player 4'
       }),
