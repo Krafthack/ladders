@@ -1,30 +1,31 @@
 var register = {};
 
-register.model = {
-  teamA: [m.prop(''), m.prop('')],
-  teamAScore: m.prop(''),
-  teamB: [m.prop(''), m.prop('')],
-  teamBScore: m.prop('')
-}
+register.model = [{
+    players: [m.prop(''), m.prop('')],
+    score: m.prop('')
+  }, {
+    players: [m.prop(''), m.prop('')],
+    score: m.prop('')
+}]
 
 register.controller = () => {
   var update = (e) => {
     e.preventDefault();
     var model = register.model;
-    var scoreA = parseInt(model.teamAScore());
-    var scoreB = parseInt(model.teamBScore());
+    var winner = parseInt(model[0].score()) > parseInt(model[1]) ? 0 : 1;
+    var loser = winner === 0 ? 1 : 0;
+
+    var setTeam = function (i) {
+      var team = model[i];
+      return {
+        players: team.players.map(player => { return {name: player()}}),
+        for: parseInt(team.score()),
+        against: parseInt(model[i === 0 ? 1 : 0].score())
+      }
+    }
     var data = {
-      score: [{
-        players: model.teamA.map(player => { return {name: player()}}),
-        for: scoreA,
-        against: scoreB,
-        isWinner: scoreA > scoreB
-      }, {
-        players: model.teamB.map(player => {return {name: player()}}),
-        for: scoreB,
-        against: scoreA,
-        isWinner: scoreB > scoreA
-      }]
+      winner: setTeam(winner),
+      loser: setTeam(loser)
     }
     console.log(data)
     m.request({ method: 'POST', url: '/api/matches/register', data: data})
@@ -42,23 +43,14 @@ register.view = (ctrl) => {
   return [
     m('h1', { class: 'heading1' }, 'Register result'),
     m('form', [
-      team(register.model.teamA),
+      team(register.model[0].players),
       m('h2', { class: ['heading2__lessVSpace'] }, 'vs.'),
-      team(register.model.teamB),
-      setResult(),
+      team(register.model[1].players),
+      setResult(register.model),
       m('button', { class: 'submitButton-register', onclick: ctrl.update} ,'Register')
     ])
   ];
 };
-
-function setResult() {
-  return m('div', { class: 'teamScore-container' }, [
-    m('h2', { class: 'heading2__lessVSpace' },  'Result'),
-    score(register.model.teamAScore, 'Team A'),
-    m('div', { class: 'teamScore-divider' }),
-    score(register.model.teamBScore, 'Team B')
-  ]);
-}
 
 function score(team, placeholder) {
   return m('input', {
@@ -69,7 +61,17 @@ function score(team, placeholder) {
   })
 }
 
+function setResult(teams) {
+  return m('div', { class: 'teamScore-container' }, [
+  m('h2', { class: 'heading2__lessVSpace' },  'Result'),
+  score(teams[0].score, 'Team A'),
+  m('div', { class: 'teamScore-divider' }),
+  score(teams[1].score, 'Team B')
+  ]);
+}
+
 function team(players) {
+  console.log(players);
   return [
     addPlayer(players[0], 'Player 1'),
     m('span', { class: 'playerSeperator' }, ' and '),

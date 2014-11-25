@@ -4,8 +4,9 @@ var express = require('express');
 var app = express();
 
 app.post('/register', (req, res) => {
-  var score = req.body.score;
-  var result = new Match({score: score});
+  var winner = req.body.winner;
+  var loser = req.body.loser;
+  var result = new Match({winner: winner, loser: loser});
   result.save((err) => {
       if (err) {
         res.status(500).send( {
