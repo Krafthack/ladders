@@ -12,7 +12,7 @@ register.controller = () => {
   var update = (e) => {
     e.preventDefault();
     var model = register.model;
-    var winner = parseInt(model[0].score()) > parseInt(model[1]) ? 0 : 1;
+    var winner = parseInt(model[0].score()) > parseInt(model[1].score()) ? 0 : 1;
     var loser = winner === 0 ? 1 : 0;
 
     var setTeam = function (i) {
@@ -27,10 +27,9 @@ register.controller = () => {
       winner: setTeam(winner),
       loser: setTeam(loser)
     }
-    console.log(data)
     m.request({ method: 'POST', url: '/api/matches/register', data: data})
       .then(() =>{
-        window.location.replace(window.location.origin + '/?/scoreboard')
+        m.route('/scoreboard');
       });
   };
 
