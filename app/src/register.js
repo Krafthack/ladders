@@ -1,22 +1,30 @@
 var register = {};
 
 register.model = {
-    players: [m.prop(''), m.prop(''), m.prop(''), m.prop('')],
-    teamOneScore: m.prop(''),
-    teamTwoScore: m.prop('')
+  teamA: [m.prop(''), m.prop('')],
+  teamAScore: m.prop(''),
+  teamB: [m.prop(''), m.prop('')],
+  teamBScore: m.prop('')
 }
 
 register.controller = () => {
-  var mapper = (team) => {
-    return team.map((player) => {
-        return player();
-      })
-  }
   var update = (e) => {
     e.preventDefault();
+    var model = register.model;
+    var scoreA = parseInt(model.teamAScore());
+    var scoreB = parseInt(model.teamBScore());
     var data = {
-      teams: mapper(register.model.players),
-      score: [parseInt(register.model.teamOneScore()), parseInt(register.model.teamTwoScore())]
+      score: [{
+        players: model.teamA.map(player => { return {name: player()}}),
+        for: scoreA,
+        against: scoreB,
+        isWinner: scoreA > scoreB
+      }, {
+        players: model.teamB.map(player => {return {name: player()}}),
+        for: scoreB,
+        against: scoreA,
+        isWinner: scoreB > scoreA
+      }]
     }
     console.log(data)
     m.request({ method: 'POST', url: '/api/matches/register', data: data})
@@ -34,48 +42,46 @@ register.view = (ctrl) => {
   return [
     m('h1', { class: 'heading1' }, 'Register result'),
     m('form', [
-      m('input', {
-        value: register.model.players[0](),
-        onchange: m.withAttr('value', register.model.players[0]),
-        class: 'inputPlayer',
-        placeholder: 'Player 1'
-      }),
-      m('span', { class: 'playerSeperator' }, ' and '),
-      m('input', {
-        value: register.model.players[1](),
-        onchange: m.withAttr('value', register.model.players[1]),
-        class: 'inputPlayer',
-        placeholder: 'Player 2'
-      }),
+      team(register.model.teamA),
       m('h2', { class: ['heading2__lessVSpace'] }, 'vs.'),
-      m('input', {
-        value: register.model.players[2](),
-        onchange: m.withAttr('value', register.model.players[2]),
-        class: 'inputPlayer',
-        placeholder: 'Player 3'
-      }),
-      m('span', { class: 'playerSeperator' }, ' and '),
-      m('input', {
-        value: register.model.players[3](),
-        onchange: m.withAttr('value', register.model.players[3]),
-        class: 'inputPlayer',
-        placeholder: 'Player 4'
-      }),
-      m('div', { class: 'teamScore-container' }, [
-        m('h2', { class: 'heading2__lessVSpace' },  'Result'),
-        m('input', {
-          value: register.model.teamOneScore(),
-          onchange: m.withAttr('value', register.model.teamOneScore),
-          class: 'teamScore',
-          placeholder: 'Team One'
-        }),
-        m('div', { class: 'teamScore-divider' }),
-        m('input', {
-          value: register.model.teamTwoScore(),
-          onchange: m.withAttr('value', register.model.teamTwoScore),
-          class: 'teamScore',
-          placeholder: 'Team Two'
-        }),
-        m('button', { class: 'submitButton-register', onclick: ctrl.update} ,'Register')])])
-  ]
+      team(register.model.teamB),
+      setResult(),
+      m('button', { class: 'submitButton-register', onclick: ctrl.update} ,'Register')
+    ])
+  ];
 };
+
+function setResult() {
+  return m('div', { class: 'teamScore-container' }, [
+    m('h2', { class: 'heading2__lessVSpace' },  'Result'),
+    score(register.model.teamAScore, 'Team A'),
+    m('div', { class: 'teamScore-divider' }),
+    score(register.model.teamBScore, 'Team B')
+  ]);
+}
+
+function score(team, placeholder) {
+  return m('input', {
+    value: team(),
+    onchange: m.withAttr('value', team),
+    class: 'teamScore',
+    placeholder: placeholder
+  })
+}
+
+function team(players) {
+  return [
+    addPlayer(players[0], 'Player 1'),
+    m('span', { class: 'playerSeperator' }, ' and '),
+    addPlayer(players[1], 'Player 2')
+  ];
+}
+
+function addPlayer(prop, placeholder) {
+  return m('input', {
+    value: prop(),
+    onchange: m.withAttr('value', prop),
+    class: 'inputPlayer',
+    placeholder: placeholder
+  });
+}

@@ -4,11 +4,8 @@ var express = require('express');
 var app = express();
 
 app.post('/register', (req, res) => {
-  var teams = req.body.teams;
-  if (typeof req.body.teams[0] == 'object') {
-    teams = _.flatten(req.body.teams);
-  }
-  var result = new Match({ teams: teams, score: req.body.score })
+  var score = req.body.score;
+  var result = new Match({score: score});
   result.save((err) => {
       if (err) {
         res.status(500).send( {
