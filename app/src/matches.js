@@ -9,18 +9,23 @@ matches.controller = () => {
   }
 };
 
-var MatchPlayerView = (player, i) =>
-  m('a.matches-playerName', { config: m.route, href: '/player/' + player } ,(i > 0 ? ',' : '') + player)
+var MatchPlayerView = (player, i) => {
+  return m('a.matches-playerName', {
+      config: m.route,
+      href: '/player/' + player.name
+    }, (i > 0 ? ',' : '') + player.name)
+}
+
 
 var MatchView = (match) =>
   m('div.match', [
-    m('div', { class: 'teamName' }, match.teams.slice(0,2).map(MatchPlayerView)),
+    m('div', { class: 'teamName' }, match.winner.players.map(MatchPlayerView)),
     m('div', { class: 'scoreWrapper'}, [
-      m('div', { class: 'score' }, match.score[0]),
+      m('div', { class: 'score' }, match.winner.for),
       m('div', { class: 'vs' } ,' vs '),
-      m('div', { class: 'score' }, match.score[1])
+      m('div', { class: 'score' }, match.loser.for)
     ]),
-    m('div', { class: 'teamName' }, match.teams.slice(2,4).map(MatchPlayerView)),
+    m('div', { class: 'teamName' }, match.loser.players.map(MatchPlayerView)),
     m('a.delete', {
 
       href: '/api/matches/invalidate?id=' + match._id,
