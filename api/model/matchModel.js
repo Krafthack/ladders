@@ -19,6 +19,8 @@ var Model = mongoose.model('Match', {
   loser: Team,
   date: { type: Date, default: Date.now },
   invalid: Boolean
+}, {
+  versionKey: 1
 });
 
 module.exports = Model;
