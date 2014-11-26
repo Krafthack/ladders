@@ -32,7 +32,7 @@
 .games,
 .wins,
 .losses,
-.draws,
+.rating,
 .points {
   text-align: center;
 }
@@ -48,11 +48,8 @@
 .entryHeader.losses::before {
   content: "L";
 }
-.entryHeader.draws::before {
-  content: "D";
-}
 .entryHeader.points::before {
-  content: "P";
+  content: "R";
 }
 @media screen and (min-width: 640px) {
   .entryCol:not(.teamName_entry) {
@@ -70,10 +67,7 @@
   .entryHeader.losses::before {
     content: "Loss";
   }
-  .entryHeader.draws::before {
-    content: "Draws";
-  }
   .entryHeader.points::before {
-    content: "Points";
+    content: "Rating";
   }
 }
