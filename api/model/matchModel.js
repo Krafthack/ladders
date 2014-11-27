@@ -14,13 +14,13 @@ var Team = {
   isWinner: Boolean
 };
 
-var Model = mongoose.model('Match', {
+var Model = mongoose.model('Match', new Schema({
   winner: Team,
   loser: Team,
   date: { type: Date, default: Date.now },
   invalid: Boolean
 }, {
-  versionKey: 1
-});
+  collection: 'matches'
+}));
 
 module.exports = Model;
