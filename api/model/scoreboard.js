@@ -35,22 +35,18 @@ function playerModel(name) {
 }
 
 function Scoreboard(matches) {
-  var scoreboard = {};
-
-  matches
+  return _(matches).chain()
   .filter((match) => {
     return !match.invalid;
   })
-  .forEach((match) => {
-    addMatch2Scoreboard(scoreboard, match);
-  })
-
-  var score = Object.keys(scoreboard).map((t) => {
-    return scoreboard[t]
-  });
-
-  return _.sortBy(score, 'rating');
-
+  .reduce((scores, match) => {
+    addMatch2Scoreboard(scores, match);
+    return scores;
+  }, {})
+  .toArray()
+  .sortBy('rating')
+  .reverse()
+  .value();
 }
 
 module.exports = Scoreboard;
