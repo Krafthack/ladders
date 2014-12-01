@@ -1,12 +1,12 @@
 var _ = require('lodash');
-var Match = require('../model/match');
+var Match = require('../model/match-model');
 var express = require('express');
 var app = express();
 
 app.get('/:name', (req, res) => {
   var player = req.param('name');
 
-  Match.model
+  Match
   .where({$or: [{'winner.players': { $in: [{name: player}]}}, {'loser.players': { $in: [{name: player}]}}], invalid: {$ne: true}})
   .exec((err, result) => {
     if (err) throw new Error(err);

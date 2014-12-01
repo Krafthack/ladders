@@ -1,11 +1,12 @@
 var _ = require('lodash');
-var Match = require('../../model/match');
+var Match = require('../../model/match-model');
 var express = require('express');
+var ur = require('url');
 var app = express();
 
 app.post('/invalidate', (req, res) => {
   var id = url.parse(req.url, true).query.id;
-  Match.model.find({ _id: id}, (err, results) => {
+  Match.find({ _id: id}, (err, results) => {
     if (results.length > 0) {
       var result = results[0];
       result.invalid = true;
