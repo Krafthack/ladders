@@ -29,31 +29,10 @@ var create = (match) => {
   return deferred.promise;
 };
 
-var player = (player) => {
-  var deferred = Q.defer();
-  Match
-  .find(
-  // regexp case insenstive query is probably inefficient
-  // should rather save the names as lowercase (also)
-  { 'teams': { $regex : new RegExp(player, "i") } })
-  .sort({date: 'desc'})
-  .exec((err, results) => {
-
-    if (err) {
-      return deferred.reject(err);
-    }
-    else {
-      return deferred.resolve(results);
-    }
-  });
-  return deferred.promise;
-}
-
 var match = function() {
   return {
     all: all,
-    create: create,
-    player: player
+    create: create
   }
 }
 module.exports = match();
