@@ -13,7 +13,7 @@ app.post('/register', (req, res) => {
   .catch((err) => {
     res.status(500).send( {
       success: false,
-      msg: 'Could register result',
+      msg: 'Could not register result',
       err: err,
       data: req.body
     });
