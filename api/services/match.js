@@ -5,7 +5,7 @@ var Match = require('../model/match-model');
 var all = () => {
   var deferred = Q.defer();
   Match.find({})
-  .sort({date: 'desc'})
+  .sort({date: 'asc'})
   .exec((err, results) => {
     if (err) {
       deferred.reject(err);
